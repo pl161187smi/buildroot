@@ -8,6 +8,10 @@ FIRST_DT=$(sed -n \
            's/^BR2_LINUX_KERNEL_INTREE_DTS_NAME="\([a-z0-9\-]*\).*"$/\1/p' \
            ${BR2_CONFIG})
 
+if [ -z "$FIRST_DT" ]; then
+	FIRST_DT="system-top"
+fi
+
 [ -z "${FIRST_DT}" ] || ln -fs ${FIRST_DT}.dtb ${BINARIES_DIR}/devicetree.dtb
 
 support/scripts/genimage.sh -c board/zynq/genimage.cfg
